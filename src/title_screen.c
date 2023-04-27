@@ -255,6 +255,36 @@ static const union AnimCmd sCopyrightBannerAnim9[] =
     ANIMCMD_FRAME(37, 4),
     ANIMCMD_END,
 };
+static const union AnimCmd sCopyrightBannerAnim10[] =
+{
+    ANIMCMD_FRAME(41, 4),
+    ANIMCMD_END,
+};
+static const union AnimCmd sCopyrightBannerAnim11[] =
+{
+    ANIMCMD_FRAME(45, 4),
+    ANIMCMD_END,
+};
+static const union AnimCmd sCopyrightBannerAnim12[] =
+{
+    ANIMCMD_FRAME(49, 4),
+    ANIMCMD_END,
+};
+static const union AnimCmd sCopyrightBannerAnim13[] =
+{
+    ANIMCMD_FRAME(53, 4),
+    ANIMCMD_END,
+};
+static const union AnimCmd sCopyrightBannerAnim14[] =
+{
+    ANIMCMD_FRAME(57, 4),
+    ANIMCMD_END,
+};
+static const union AnimCmd sCopyrightBannerAnim15[] =
+{
+    ANIMCMD_FRAME(61, 4),
+    ANIMCMD_END,
+};
 
 static const union AnimCmd *const sStartCopyrightBannerAnimTable[] =
 {
@@ -268,6 +298,12 @@ static const union AnimCmd *const sStartCopyrightBannerAnimTable[] =
     sCopyrightBannerAnim7,
     sCopyrightBannerAnim8,
     sCopyrightBannerAnim9,
+    sCopyrightBannerAnim10,
+    sCopyrightBannerAnim11,
+    sCopyrightBannerAnim12,
+    sCopyrightBannerAnim13,
+    sCopyrightBannerAnim14,
+    sCopyrightBannerAnim15,
 };
 
 static const struct SpriteTemplate sStartCopyrightBannerSpriteTemplate =
@@ -285,7 +321,7 @@ static const struct CompressedSpriteSheet sSpriteSheet_PressStart[] =
 {
     {
         .data = gTitleScreenPressStartGfx,
-        .size = 0x520,
+        .size = 0x800,
         .tag = 1001
     },
     {},
@@ -422,6 +458,19 @@ static void CreateCopyrightBanner(s16 x, s16 y)
     {
         spriteId = CreateSprite(&sStartCopyrightBannerSpriteTemplate, x, y, 0);
         StartSpriteAnim(&gSprites[spriteId], i + 5);
+    }
+}
+
+static void CreateSubtitle(s16 x, s16 y)
+{
+    u8 i;
+    u8 spriteId;
+
+    x -= 80;
+    for (i = 0; i < 6; i++, x += 32)
+    {
+        spriteId = CreateSprite(&sStartCopyrightBannerSpriteTemplate, x, y, 0);
+        StartSpriteAnim(&gSprites[spriteId], i + 10);
     }
 }
 
@@ -705,6 +754,7 @@ static void Task_TitleScreenPhase2(u8 taskId)
                                     | DISPCNT_OBJ_ON);
         CreatePressStartBanner(START_BANNER_X, 108);
         CreateCopyrightBanner(START_BANNER_X, 148);
+        CreateSubtitle(DISPLAY_WIDTH / 2, 88);
         gTasks[taskId].data[4] = 0;
         gTasks[taskId].func = Task_TitleScreenPhase3;
     }
